@@ -1,0 +1,854 @@
+[
+    {
+        "requestId": "93503.1",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/",
+            "method": "GET",
+            "headers": {
+                "Upgrade-Insecure-Requests": "1",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "VeryHigh",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681248.839963,
+        "wallTime": 1517324418.09141,
+        "initiator": {
+            "type": "other"
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.2",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/main.css",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "VeryHigh",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681248.845822,
+        "wallTime": 1517324418.09727,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 4
+        },
+        "type": "Stylesheet",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.3",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/webcomponentsjs/webcomponents-lite.min.js",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681248.846109,
+        "wallTime": 1517324418.09755,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 6
+        },
+        "type": "Script",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.4",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-light.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "http://localhost:9000/",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681248.846372,
+        "wallTime": 1517324418.09781,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 7
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.5",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/main.js",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681248.846609,
+        "wallTime": 1517324418.09805,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 29
+        },
+        "type": "Script",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.6",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/webpack-dev-server.js",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681248.846868,
+        "wallTime": 1517324418.09831,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 30
+        },
+        "type": "Script",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.7",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/polyfills.js",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681248.847109,
+        "wallTime": 1517324418.09855,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 31
+        },
+        "type": "Script",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.8",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/redoc.js",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681248.847344,
+        "wallTime": 1517324418.09879,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 32
+        },
+        "type": "Script",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.12",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/polymer/polymer.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-light.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.534821,
+        "wallTime": 1517324419.78621,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.13",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-light.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.535513,
+        "wallTime": 1517324419.7869,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.14",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-behavior.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-light.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.535824,
+        "wallTime": 1517324419.78721,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.15",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-overlay.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-light.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.536148,
+        "wallTime": 1517324419.78754,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.16",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-shared-styles.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-light.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.536471,
+        "wallTime": 1517324419.78786,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.17",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/polymer/polymer-mini.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/polymer/polymer.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.584524,
+        "wallTime": 1517324419.83591,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.18",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/iron-form-element-behavior/iron-form-element-behavior.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-behavior.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.6509,
+        "wallTime": 1517324419.90229,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.19",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/iron-a11y-announcer/iron-a11y-announcer.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-behavior.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.651255,
+        "wallTime": 1517324419.90264,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.20",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-dropdown-behavior.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-behavior.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.65159,
+        "wallTime": 1517324419.90298,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.21",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/iron-list/iron-list.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-overlay.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.666512,
+        "wallTime": 1517324419.9179,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.22",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/paper-styles/shadow.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-overlay.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.666771,
+        "wallTime": 1517324419.91816,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.23",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-overlay-behavior.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/vaadin-combo-box/vaadin-combo-box-overlay.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.66712,
+        "wallTime": 1517324419.91851,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.24",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/polymer/polymer-micro.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/polymer/polymer-mini.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.671475,
+        "wallTime": 1517324419.92286,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.25",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/iron-resizable-behavior/iron-resizable-behavior.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/iron-list/iron-list.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.720693,
+        "wallTime": 1517324419.97208,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.26",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/iron-scroll-target-behavior/iron-scroll-target-behavior.html",
+            "method": "GET",
+            "headers": {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+                "Referer": "https://cdn.vaadin.com/vaadin-core-elements/1.2.0/iron-list/iron-list.html",
+                "Origin": "http://localhost:9000"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.721024,
+        "wallTime": 1517324419.97241,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 28
+        },
+        "type": "Document",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.27",
+        "loaderId": "93503.2",
+        "documentURL": "https://ghbtns.com/github-btn.html?user=Rebilly&repo=ReDoc&type=star&count=true&size=large",
+        "request": {
+            "url": "https://ghbtns.com/github-btn.html?user=Rebilly&repo=ReDoc&type=star&count=true&size=large",
+            "method": "GET",
+            "headers": {
+                "Upgrade-Insecure-Requests": "1",
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "VeryHigh",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.774762,
+        "wallTime": 1517324420.02614,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 21
+        },
+        "type": "Document",
+        "frameId": "(4539615FF99A33B1A50C1940E83DA2B3)"
+    },
+    {
+        "requestId": "93503.28",
+        "loaderId": "93503.2",
+        "documentURL": "https://ghbtns.com/github-btn.html?user=Rebilly&repo=ReDoc&type=star&count=true&size=large",
+        "request": {
+            "url": "https://api.github.com/repos/Rebilly/ReDoc?callback=callback",
+            "method": "GET",
+            "headers": {
+                "Referer": "https://ghbtns.com/github-btn.html?user=Rebilly&repo=ReDoc&type=star&count=true&size=large",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "Low",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.791481,
+        "wallTime": 1517324420.04286,
+        "initiator": {
+            "type": "script",
+            "stack": {
+                "callFrames": [
+                    {
+                        "functionName": "jsonp",
+                        "scriptId": "28",
+                        "url": "https://ghbtns.com/github-btn.html?user=Rebilly&repo=ReDoc&type=star&count=true&size=large",
+                        "lineNumber": 0,
+                        "columnNumber": 4357
+                    }
+                ]
+            }
+        },
+        "type": "Script",
+        "frameId": "(4539615FF99A33B1A50C1940E83DA2B3)"
+    },
+    {
+        "requestId": "93503.29",
+        "loaderId": "93503.2",
+        "documentURL": "https://ghbtns.com/github-btn.html?user=Rebilly&repo=ReDoc&type=star&count=true&size=large",
+        "request": {
+            "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjQwcHgiIGhlaWdodD0iNDBweCIgdmlld0JveD0iMTIgMTIgNDAgNDAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMTIgMTIgNDAgNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxwYXRoIGZpbGw9IiMzMzMzMzMiIGQ9Ik0zMiAxMy40Yy0xMC41IDAtMTkgOC41LTE5IDE5YzAgOC40IDUuNSAxNS41IDEzIDE4YzEgMC4yIDEuMy0wLjQgMS4zLTAuOWMwLTAuNSAwLTEuNyAwLTMuMiBjLTUuMyAxLjEtNi40LTIuNi02LjQtMi42QzIwIDQxLjYgMTguOCA0MSAxOC44IDQxYy0xLjctMS4yIDAuMS0xLjEgMC4xLTEuMWMxLjkgMC4xIDIuOSAyIDIuOSAyYzEuNyAyLjkgNC41IDIuMSA1LjUgMS42IGMwLjItMS4yIDAuNy0yLjEgMS4yLTIuNmMtNC4yLTAuNS04LjctMi4xLTguNy05LjRjMC0yLjEgMC43LTMuNyAyLTUuMWMtMC4yLTAuNS0wLjgtMi40IDAuMi01YzAgMCAxLjYtMC41IDUuMiAyIGMxLjUtMC40IDMuMS0wLjcgNC44LTAuN2MxLjYgMCAzLjMgMC4yIDQuNyAwLjdjMy42LTIuNCA1LjItMiA1LjItMmMxIDIuNiAwLjQgNC42IDAuMiA1YzEuMiAxLjMgMiAzIDIgNS4xYzAgNy4zLTQuNSA4LjktOC43IDkuNCBjMC43IDAuNiAxLjMgMS43IDEuMyAzLjVjMCAyLjYgMCA0LjYgMCA1LjJjMCAwLjUgMC40IDEuMSAxLjMgMC45YzcuNS0yLjYgMTMtOS43IDEzLTE4LjFDNTEgMjEuOSA0Mi41IDEzLjQgMzIgMTMuNHoiLz48L3N2Zz4=",
+            "method": "GET",
+            "headers": {},
+            "mixedContentType": "none",
+            "initialPriority": "VeryLow",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.794819,
+        "wallTime": 1517324420.0462,
+        "initiator": {
+            "type": "parser",
+            "url": "https://ghbtns.com/github-btn.html?user=Rebilly&repo=ReDoc&type=star&count=true&size=large",
+            "lineNumber": 0
+        },
+        "type": "Image",
+        "frameId": "(4539615FF99A33B1A50C1940E83DA2B3)"
+    },
+    {
+        "requestId": "93503.34",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/sockjs-node/info?t=1517324420212",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681250.961775,
+        "wallTime": 1517324420.21315,
+        "initiator": {
+            "type": "script",
+            "stack": {
+                "callFrames": [
+                    {
+                        "functionName": "o._start",
+                        "scriptId": "41",
+                        "url": "http://localhost:9000/webpack-dev-server.js",
+                        "lineNumber": 0,
+                        "columnNumber": 81531
+                    }
+                ]
+            }
+        },
+        "type": "XHR",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.37",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/sockjs-node/info?t=1517324420418",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681251.168619,
+        "wallTime": 1517324420.41999,
+        "initiator": {
+            "type": "script",
+            "stack": {
+                "callFrames": [
+                    {
+                        "functionName": "scheduleTask",
+                        "scriptId": "46",
+                        "url": "http://localhost:9000/polyfills.js",
+                        "lineNumber": 16127,
+                        "columnNumber": 23
+                    }
+                ]
+            }
+        },
+        "type": "XHR",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.39",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://fonts.googleapis.com/css?family=Roboto:300,400,700|Montserrat:400,700",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "VeryHigh",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681251.788855,
+        "wallTime": 1517324421.04021,
+        "initiator": {
+            "type": "script",
+            "stack": {
+                "callFrames": [
+                    {
+                        "functionName": "applyToTag",
+                        "scriptId": "51",
+                        "url": "http://localhost:9000/redoc.js",
+                        "lineNumber": 24955,
+                        "columnNumber": 8
+                    }
+                ]
+            }
+        },
+        "type": "Stylesheet",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.40",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/swagger.yaml",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681252.324257,
+        "wallTime": 1517324421.57559,
+        "initiator": {
+            "type": "script",
+            "stack": {
+                "callFrames": [
+                    {
+                        "functionName": "",
+                        "scriptId": "46",
+                        "url": "http://localhost:9000/polyfills.js",
+                        "lineNumber": 14214,
+                        "columnNumber": 35
+                    }
+                ]
+            }
+        },
+        "type": "Other",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.41",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\"><g></g><path d=\"M275.682 147.999c0 10.864-8.837 19.661-19.682 19.661v0c-10.875 0-19.681-8.796-19.681-19.661v-96.635c0-10.885 8.806-19.661 19.681-19.661v0c10.844 0 19.682 8.776 19.682 19.661v96.635z\" fill=\"",
+            "method": "GET",
+            "headers": {},
+            "mixedContentType": "none",
+            "initialPriority": "VeryLow",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681252.334187,
+        "wallTime": 1517324421.58552,
+        "initiator": {
+            "type": "parser",
+            "url": "http://localhost:9000/",
+            "lineNumber": 0
+        },
+        "type": "Image",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    },
+    {
+        "requestId": "93503.74",
+        "loaderId": "93503.1",
+        "documentURL": "http://localhost:9000/",
+        "request": {
+            "url": "http://localhost:9000/favicon.ico",
+            "method": "GET",
+            "headers": {
+                "Referer": "http://localhost:9000/",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"
+            },
+            "mixedContentType": "none",
+            "initialPriority": "High",
+            "referrerPolicy": "no-referrer-when-downgrade"
+        },
+        "timestamp": 681252.397661,
+        "wallTime": 1517324421.64899,
+        "initiator": {
+            "type": "other"
+        },
+        "type": "Other",
+        "frameId": "(E40F2C2BAC53CC8378C9E2FAC8F43BAB)"
+    }
+]
