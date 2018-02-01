@@ -24,7 +24,7 @@
 
 # Verification-
 
-* ` npm start ` should run the app on localhost:9000 .
+* ` npm start ` should run the app on localhost:9000.
 
 
 # Running the app on headless chrome-
