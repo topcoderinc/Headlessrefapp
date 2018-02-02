@@ -17,14 +17,14 @@
 
 # Running and Testing-
 
-* Run ` npm start ` to start the angular app on localhost:9000 .
+* Run ` npm start ` to start the angular app on localhost:9000.
 * Run ` npm run test ` to test the app and get code coverage result.
 * Run ` npm run e2e ` to run e2e tests.
 
 
 # Verification-
 
-* ` npm start ` should run the app on localhost:9000 .
+* ` npm start ` should run the app on localhost:9000.
 
 
 # Running the app on headless chrome-
