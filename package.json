@@ -124,8 +124,6 @@
     "rxjs": "^5.3.1"
   },
   "dependencies": {
-    "chrome-launcher": "^0.10.2",
-    "chrome-remote-interface": "^0.25.5",
     "core-js": "^2.5.1",
     "dropkickjs": "~2.1.10",
     "hint.css": "^2.3.2",
@@ -137,11 +135,14 @@
     "openapi-sampler": "^0.4.3",
     "perfect-scrollbar": "^0.8.1",
     "prismjs": "^1.8.1",
+    "puppeteer": "^1.0.0",
+    "simple-git": "^1.89.0",
     "remarkable": "1.7.1",
     "scrollparent": "^2.0.1",
     "slugify": "^1.2.1",
     "stream-http": "^2.6.1",
     "ts-helpers": "^1.1.2",
+    "webdriver-manager": "^12.0.6",
     "zone.js": "^0.8.17"
   }
 }

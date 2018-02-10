@@ -1,11 +1,12 @@
 const fs = require('fs');
-const chromeLauncher = require('chrome-launcher');
-const cdp = require('chrome-remote-interface');
-var spawn = require('child_process').spawn;
-
+const puppeteer = require('puppeteer');
+const spawn = require('child_process').spawn;
+const path = require('path');
+const config = require(path.resolve(__dirname, 'config.json'));
+const simpleGit = require('simple-git')();
+const timeout = ms => new Promise(res => setTimeout(res, ms));
 // URL of the app to be loaded 
-const url = 'http://localhost:9000/';
-
+const url = config.url;
 /**
  * function to spawn a new linux process
  * @param  {string} dir working directory for the process
@@ -13,18 +14,19 @@ const url = 'http://localhost:9000/';
  * @return {object}     spawned Process
  */
 function spawnProcess(dir, cmd) {
-  var cmdParts = cmd.split(/\s+/);
+  const cmdParts = cmd.split(/\s+/);
 
-  return spawn(cmdParts[0], cmdParts.slice(1), { cwd: dir});
+  return spawn(cmdParts[0], cmdParts.slice(1), {cwd: dir});
 }
 
-var child = spawnProcess('.', 'npm start');
+const child = spawnProcess('.', 'npm start');
 
 child.stdout.on('data', async function (data) {
   console.log(data.toString('utf-8'));
   //check if the angular app has been served.
-  if(data && data.indexOf('Project is running at') >= 0){
-      hookProfiler();//hook the profiler to a headless chrome
+  if (data && data.indexOf('Compiled successfully') >= 0) {
+    await timeout(5000);// sleep to ensure everything is preared
+    hookProfiler();//hook the profiler to a headless chrome
   }
 });
 
@@ -33,40 +35,71 @@ child.stderr.on('data', function (data) {
   console.log("error", data.toString('utf-8'));
 });
 
-async function hookProfiler(){
-  //launch chrome headless
-  const chrome = await chromeLauncher.launch({port: 9222});
-  const client = await cdp();
-
+async function hookProfiler() {
+  let browser;
   try {
-        const events = [];// log events
-        const networkRequests = [];//log network requests
-        const {Network, Page, Tracing} = client;
-        Network.requestWillBeSent((params) => {
-            networkRequests.push(params);
-        });
+    //launch chrome headless
+    browser = await puppeteer.launch(config.puppeteerOptions);
+    const page = await browser.newPage();
+    const networkRequests = [];//log network requests
+    page.on('requestfinished', request => {
+      networkRequests.push({
+        "requestId": request._requestId,
+        "documentURL": request._url,
+        "request": {
+          "method": request._method,
+          "headers": request._headers
+        },
+        "response": {
+          "url": request._response._url,
+          "status": request._response._status,
+          "headers": request._response._headers
+        },
+        "type": request._resourceType,
+        "frameId": request._frame._id
+      });
 
-        await Page.enable();
-        await Network.enable();
+    });
+    // see all possible options/categories in https://github.com/GoogleChrome/puppeteer/blob/master/lib/Tracing.js
+    await page.tracing.start(config.tracingOptions);
+    console.log(`Go to page with url ${url}`);
+    await page.goto(url, {timeout: config.timeout});
+    await page.waitForSelector(config.swaggerNameSelector, {timeout: config.timeout});
+    let name  = await page.$eval(config.swaggerNameSelector, e => e.textContent);
+    console.log(`current swagger document name is ${name}`);
+    // Type into search box.
+    await page.type(config.swaggerUrlSelector, config.swaggerUrl);
+    // click explore button
+    await page.$eval(config.exploreButtonSelector, exploreButton => exploreButton.click());
+    // wait until all resources are loaded
+    await page.waitForNavigation({waitUntil: ['domcontentloaded','networkidle0'], timeout: config.timeout});
+    console.log('current page url is '+ page.url());
+    name  = await page.$eval(config.swaggerNameSelector,e => e.textContent);
+    console.log(`current swagger document name is ${name}`);
+    // open chrome for timeline viewer https://chromedevtools.github.io/timeline-viewer/ to view trace file
+    await page.tracing.stop();
 
-        Tracing.dataCollected(({value}) => {
-            events.push(...value);
-        });
-
-        await Tracing.start();
-        await Page.navigate({url});
-        await Page.loadEventFired();
-        await Tracing.end();
-        await Tracing.tracingComplete();
-
-        // save the data
-        fs.writeFileSync('./timeline.json', JSON.stringify(events));
-        fs.writeFileSync('./network.json', JSON.stringify(networkRequests, null, 4));
-    } catch (err) {
-        console.error(err);
-    } finally {
-        await client.close();
-        await chrome.kill();
-        console.log('press control+c to quit.');
+    const datetime  = new Date().toISOString().replace(/[-:\.]/g, '_');
+    const traceName = path.join(config.profileFolder, `trace-${datetime}.json`);
+    // include cpu/memory/network data in trace
+    fs.renameSync(config.tracingOptions.path, traceName);
+    const networkName = path.join(config.profileFolder, `networks-${datetime}.json`);
+    // save the network data
+    fs.writeFileSync(networkName,JSON.stringify(networkRequests));
+    //add profile result to git 
+    await simpleGit.add([traceName, networkName]);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    if (browser) {
+      await browser.close();
     }
+    if(child){
+      // will exit after destroy stdin of child and kill child
+      child.stdin.destroy();
+      child.kill();
+    }
+    process.exit();
+  }
 }
+

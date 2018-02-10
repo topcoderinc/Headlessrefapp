@@ -1,0 +1,17 @@
+{
+  "url":"http://localhost:9000/",
+  "swaggerUrl":"https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml",
+  "swaggerNameSelector":".api-info-wrapper h1",
+  "swaggerUrlSelector":"#schema-url-input",
+  "timeout":20000,
+  "profileFolder":"profiling-data",
+  "exploreButtonSelector":"#schema-url-form button",
+  "puppeteerOptions":{
+    "executablePath": "/opt/google/chrome/chrome",
+    "args": ["--no-sandbox","--disable-gpu","--remote-debugging-address=0.0.0.0","--remote-debugging-port=9223"]
+  },
+  "tracingOptions":{
+    "path": "trace.json",
+    "categories":["disabled-by-default-v8.cpu_profiler", "disabled-by-default-devtools.timeline", "disabled-by-default-devtools.timeline.frame","devtools.timeline","v8.execute"]
+  }
+}

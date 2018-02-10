@@ -30,9 +30,10 @@
 # Running the app on headless chrome-
 
 * Run ` npm run profile ` to run the app on headless chrome and capture network and tracing logs.
-* The network logs is generated in network.json file in ReDoc directory.
-* The trace logs is generated in timeline.json file in ReDoc directory.
-* to view trace logs, Open devtools in chrome, go to Performance tab, click on Load Profile icon and select the timeline.json file generated.
+* The network logs is generated in `networks-datetime.json` file in profiling-data directory.
+* The trace logs is generated in `trace-datetime.json` file in profiling-data directory.
+* to view network file `networks-datetime.json`, please use [json viewer](http://jsonviewer.stack.hu/).
+* to view trace logs, Open devtools in chrome, go to Performance tab, click on Load Profile icon and select the `trace-datetime.json` file generated.
 * The code for it is in chrome-profiler directory.
 
 

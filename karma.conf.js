@@ -53,6 +53,10 @@ module.exports = function(config) {
       }
     },
 
-    browserNoActivityTimeout: 60000,
+    browserNoActivityTimeout: 100000,
+    port: 9876,
+    captureTimeout: 60000, 
+    browserDisconnectTimeout : 10000,
+    browserDisconnectTolerance : 1,
   });
 };

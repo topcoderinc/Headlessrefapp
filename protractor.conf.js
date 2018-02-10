@@ -19,7 +19,6 @@ let config = {
       });
     });
   },
-  //directConnect: true,
   useAllAngular2AppRoots: true,
   allScriptsTimeout: 180000,
   jasmineNodeOpts: {
@@ -29,8 +28,12 @@ let config = {
     print: function() {}
   },
   multiCapabilities: [
-    { browserName: 'chrome' }
-    // { browserName: 'firefox' }
+    { 
+       browserName: 'chrome',
+       chromeOptions: {
+        args: ['--headless','--no-sandbox', '--disable-setuid-sandbox','--disable-gpu'],
+      }
+    }
   ]
 };
 
