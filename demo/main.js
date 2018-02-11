@@ -70,5 +70,48 @@
         $el.addEventListener('mousedown', selectItem);
       });
     });
+    // demo codes from https://developer.chrome.com/devtools/docs/heap-profiling-dom-leaks to show detached dom
+    console.log('Add detached nodes');
+    var detached = document.createElement("div");
+     $specInput.appendChild(detached);
+     $specInput.removeChild(detached);
+    for (var i = 0; i < 100; ++i) {
+      var div = document.createElement('div');
+      div.data = new Array(10000);
+      for (var j = 0, l = div.data.length; j < l; ++j)
+        div.data[j] = j.toString();
+      detached.appendChild(div);
+    }
+
+    console.log('add sessionstorage by main.js');
+    var dateTime = new Date().getTime();
+    for(var i=0;i<5000;i++) {
+      sessionStorage.setItem(`sessionStorageKey${i}${dateTime}`,`sessionStorage1${i}${dateTime} hello world`);
+    }
+
+    console.log('add localstorage by main.js');
+    for(var j=0; j<5000; j++) {
+      localStorage.setItem(`localStorageStorageKey${j}${dateTime}`,`localStorage1${j}${dateTime} hello world`);
+    }
+    console.log('add IndexedDB by main.js');
+    var db = new Dexie("test");
+    db.version(1).stores({
+      raindrops: '++id,position'
+    });
+    var drops = [];
+    var total = 10000;
+    for (var k=0;k<total;++k) {
+      drops.push({position: `position${k}${dateTime}`});
+    }
+    db.raindrops.bulkAdd(drops).then(function(lastKey) {
+      console.log(`Done adding ${total} raindrops all over the place`);
+      console.log("Last raindrop's id was: " + lastKey);
+    }).catch(Dexie.BulkError, function (e) {
+      // Explicitely catching the bulkAdd() operation makes those successful
+      // additions commit despite that there were errors.
+      console.error ("Some raindrops did not succeed. However, " +
+        total-e.failures.length + " raindrops was added successfully");
+    });
+
   });
 })();

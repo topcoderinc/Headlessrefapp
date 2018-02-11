@@ -1,8 +1,11 @@
 dev:
-  image: node:7-alpine
+  build: .
   command: sh -c "npm install; npm start -- --host=0.0.0.0"
   ports:
    - "9000:9000"
   volumes:
    - "./:/code"
+  environment:
+    - SKIP_ADD_GIT=true
+    - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
   working_dir: /code

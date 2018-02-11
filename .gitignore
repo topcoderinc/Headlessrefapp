@@ -38,3 +38,4 @@ compiled
 .ghpages-tmp
 stats.json
 /package-lock.json
+.idea

@@ -1,17 +1,51 @@
 {
-  "url":"http://localhost:9000/",
-  "swaggerUrl":"https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml",
-  "swaggerNameSelector":".api-info-wrapper h1",
-  "swaggerUrlSelector":"#schema-url-input",
-  "timeout":20000,
-  "profileFolder":"profiling-data",
-  "exploreButtonSelector":"#schema-url-form button",
-  "puppeteerOptions":{
+  "routes": [
+    {
+      "url": "http://localhost:9000/",
+      "selector": ".api-info-wrapper h1"
+    },
+    {
+      "url": "http://localhost:9000/#section/Authentication",
+      "selector": ".api-info-wrapper h1"
+    },
+    {
+      "url": "http://localhost:9000/?url=https://api.apis.guru/v2/specs/instagram.com/1.0.0/swagger.yaml#tag/locations",
+      "selector": ".api-info-wrapper h1"
+    },
+    {
+      "url": "http://localhost:9000/?url=https://api.apis.guru/v2/specs/googleapis.com/calendar/v3/swagger.yaml#tag/channels",
+      "selector": ".api-info-wrapper h1"
+    },
+    {
+      "url": "http://localhost:9000/?url=https://api.apis.guru/v2/specs/data2crm.com/1/swagger.yaml#tag/Account",
+      "selector": ".api-info-wrapper h1"
+    },
+    {
+      "url": "http://localhost:9000/?url=https://api.apis.guru/v2/specs/graphhopper.com/1.0/swagger.yaml",
+      "selector": ".api-info-wrapper h1"
+    }
+  ],
+  "waitTimeout": 5000,
+  "pageTimeout": 20000,
+  "testBetweenTimeout": 500,
+  "profileFolder": "profiling-data",
+  "puppeteerOptions": {
     "executablePath": "/opt/google/chrome/chrome",
-    "args": ["--no-sandbox","--disable-gpu","--remote-debugging-address=0.0.0.0","--remote-debugging-port=9223"]
+    "args": [
+      "--no-sandbox",
+      "--disable-gpu",
+      "--remote-debugging-address=0.0.0.0",
+      "--remote-debugging-port=9223"
+    ]
   },
-  "tracingOptions":{
+  "tracingOptions": {
     "path": "trace.json",
-    "categories":["disabled-by-default-v8.cpu_profiler", "disabled-by-default-devtools.timeline", "disabled-by-default-devtools.timeline.frame","devtools.timeline","v8.execute"]
+    "categories": [
+      "disabled-by-default-v8.cpu_profiler",
+      "disabled-by-default-devtools.timeline",
+      "disabled-by-default-devtools.timeline.frame",
+      "devtools.timeline",
+      "v8.execute"
+    ]
   }
 }
