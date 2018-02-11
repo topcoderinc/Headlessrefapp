@@ -47,6 +47,7 @@
 
 
 # Running the app on headless chrome
+I add two flags from environment variables, if exist **SKIP_ADD_GIT** it will not add files to git repo, if exist **SKIP_START_APP** it will not use spawn to start main application.
 * Run ` npm run profile ` to run the app on headless chrome and capture network and tracing logs, console logs,heap snapshot, profiles result.
 * The network logs is generated in `networks-datetime.json` file in profiling-data directory.
 * The trace logs is generated in `trace-datetime.json` file in profiling-data directory.
@@ -63,6 +64,7 @@ input **Detached** in Class filter and you can find deached dom trees/nodes, see
 Please install docker and docker-compose.
 ```sh
 docker-compose build
+# if you meet permission issue you can either download without docker or add --unsafe option
 docker-compose run dev npm install
 docker-compose run dev npm test
 docker-compose run dev npm run e2e

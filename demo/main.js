@@ -99,7 +99,7 @@
       raindrops: '++id,position'
     });
     var drops = [];
-    var total = 10000;
+    var total = 5000;
     for (var k=0;k<total;++k) {
       drops.push({position: `position${k}${dateTime}`});
     }

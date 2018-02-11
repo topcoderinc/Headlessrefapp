@@ -16,7 +16,7 @@ const formatBytes = bytes=>{
   if(dotIndex !== -1){
     let nonZeroIndex = chars.findIndex(x=>x!=='.' && x!=='0');
     if(nonZeroIndex !== -1){
-      decimals = nonZeroIndex;
+      decimals = nonZeroIndex < dotIndex ? 2: nonZeroIndex;
     }
   }
   return Number(num.toFixed(decimals));
@@ -46,7 +46,7 @@ if(process.env.SKIP_START_APP){
     }
   });
 
-   // log any errors in child process
+  // log any errors in child process
   child.stderr.on('data', function (data) {
     console.log("error", data.toString('utf-8'));
   });
@@ -91,7 +91,7 @@ async function hookProfiler() {
 
 /**
  * Profile page with url/selector
- * @param route cantains the page url and selector
+ * @param route contains the page url and selector
  * @param page the chrome page
  * @returns profile result with all information
  */
@@ -100,6 +100,12 @@ async function pageProfiler(route, page) {
   console.log(`Go to page with url ${url}`);
   const client = page._client;
   const networkRequests = [];//log network requests
+  page.on('error', err => {
+    console.log(err);
+  });
+  page.on('pageerror', perr => {
+    console.log(perr);
+  });
   page.on('requestfinished', request => {
     networkRequests.push({
       'requestId': request._requestId,
@@ -122,8 +128,8 @@ async function pageProfiler(route, page) {
   const logs = [];
   page.on('console', msg => {
     logs.push({
-        type: msg._type,
-        text: msg._text
+      type: msg._type,
+      text: msg._text
     });
   });
   client.on('Log.entryAdded', logEntry => {

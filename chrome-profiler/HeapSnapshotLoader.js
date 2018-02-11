@@ -14,7 +14,8 @@ self.self = {
   Runtime: runtime,
   addEventListener: () => {}
 };
-
+// will not show weak retainers errors from  HeapSnapshotWorker.HeapSnapshot
+console.warn=(msg)=>{};
 require('chrome-devtools-frontend/front_end/heap_snapshot_worker/AllocationProfile');
 require('chrome-devtools-frontend/front_end/heap_snapshot_worker/HeapSnapshot');
 require('chrome-devtools-frontend/front_end/heap_snapshot_worker/HeapSnapshotLoader');
