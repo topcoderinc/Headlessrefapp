@@ -18,7 +18,7 @@ RUN cd /home \
     && tar xvf "node-v$NODE_VERSION-linux-x64.tar" \
     && ln -s /home/node-v$NODE_VERSION-linux-x64/bin/node /usr/local/bin/node \
     && ln -s /home/node-v$NODE_VERSION-linux-x64/bin/npm /usr/local/bin/npm \
-    && rm -rf "node-v$NODE_VERSION-linux-x64.tar"
+    && rm -rf "node-v$NODE_VERSION-linux-x64.tar" && npm -g config set user root
 
 
 
