@@ -104,7 +104,15 @@ async function pageProfiler(route, page) {
     console.log(err);
   });
   page.on('pageerror', perr => {
-    console.log(perr);
+    conoe.log(perr);
+  });
+  let totalBrowserObjects = 0;
+  page.on('request', request => {
+    // just count the number of HTTP GET requests for each route as the number of browser objects
+    if(request._url && request._url.toLowerCase().startsWith("http")
+    && request._method && request._method === 'GET'){
+      totalBrowserObjects++;
+    }
   });
   page.on('requestfinished', request => {
     networkRequests.push({
@@ -244,7 +252,6 @@ async function pageProfiler(route, page) {
     await simpleGit.add([traceName, networkName, logsName, heapsnapshotName]);
   }
 
-
   return {
     url: url,
     'total-watchers':totalWatchers,
@@ -253,5 +260,6 @@ async function pageProfiler(route, page) {
     'total-global-variables': totalGlobalVariables,
     'total-console-logs' : logs.length,
     'total-detached-dom':  totalDeachedDoms,
+    'total-browser-objects': totalBrowserObjects
   }
 }

@@ -32,7 +32,7 @@
 - *Total size of IndexedDB storage*: extract result from [Storage](https://chromedevtools.github.io/devtools-protocol/tot/Storage)
 - *Number of logs that is published to browser console*: extract result from [Log](https://chromedevtools.github.io/devtools-protocol/tot/Loge) and [console event](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#event-console).
 - *Number of detached DOM per screen*: extract result from [HeapSnapshot](https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler#event-addHeapSnapshotChunk)
-
+- *Number of browser objects*:count the number of HTTP GET requests for each route as the number of browser objects
 
 # Running and Testing
 

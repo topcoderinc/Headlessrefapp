@@ -5,7 +5,11 @@ dev:
    - "9000:9000"
   volumes:
    - "./:/code"
+   - /dev/shm:/dev/shm
   environment:
     - SKIP_ADD_GIT=true
     - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+    - DBUS_SESSION_BUS_ADDRESS=/dev/null
   working_dir: /code
+  cap_add:
+    - SYS_ADMIN
