@@ -26,13 +26,16 @@
     }
   ],
   "waitTimeout": 5000,
+  "waitHeapSnapshotTimeout": 1000,
   "pageTimeout": 20000,
   "testBetweenTimeout": 500,
   "profileFolder": "profiling-data",
+  "chromePaths":["/usr/bin/google-chrome-unstable","/opt/google/chrome/chrome","C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"],
   "puppeteerOptions": {
-    "executablePath": "/opt/google/chrome/chrome",
+    "executablePath": "/usr/bin/google-chrome-stable",
     "args": [
       "--no-sandbox",
+      "--disable-setuid-sandbox",
       "--disable-gpu",
       "--remote-debugging-address=0.0.0.0",
       "--remote-debugging-port=9223"

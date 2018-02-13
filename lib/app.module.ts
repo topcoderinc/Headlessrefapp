@@ -14,6 +14,7 @@ import { routes } from './app.routes';
 export class AppModule {
   constructor(public router: Router) {
     // output all route paths
+    console.log('all routes:');
     console.log(this.router.config.map(c=>c.path));
   }
 }

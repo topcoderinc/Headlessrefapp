@@ -15,7 +15,7 @@
   "types": "dist/redoc.module.d.ts",
   "scripts": {
     "start": "webpack-dev-server --config build/webpack.dev.js --content-base demo",
-    "profile": "node chrome-profiler/profile_site",
+    "profile": "node --max_old_space_size=2000000 chrome-profiler/profile_site",
     "start:prod": "NODE_ENV=production npm start",
     "test": "npm run lint && node ./build/run_tests.js",
     "lint": "tslint -e \"lib/**/*{ngfactory|css.shim}.ts\" lib/**/*.ts",

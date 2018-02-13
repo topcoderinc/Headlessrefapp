@@ -1,15 +1,20 @@
-dev:
-  build: .
-  command: sh -c "npm install; npm start -- --host=0.0.0.0"
-  ports:
-   - "9000:9000"
-  volumes:
-   - "./:/code"
-   - /dev/shm:/dev/shm
-  environment:
-    - SKIP_ADD_GIT=true
-    - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-    - DBUS_SESSION_BUS_ADDRESS=/dev/null
-  working_dir: /code
-  cap_add:
-    - SYS_ADMIN
+version: "3.5"
+services:
+  dev:
+    build:
+      context: .
+      shm_size: '2gb'
+    container_name: puppeteer_chrome
+    command: dumb-init sh -c "npm install; npm start -- --host=0.0.0.0"
+    ports:
+      - 9000:9000
+      - 9223:9223
+    volumes:
+      - "./:/code"
+    environment:
+      - SKIP_ADD_GIT=true
+      - SKIP_START_APP=true
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+    working_dir: /code
+    cap_add:
+      - SYS_ADMIN

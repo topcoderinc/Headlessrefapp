@@ -40,7 +40,7 @@ if(process.env.SKIP_START_APP){
   child.stdout.on('data', async function (data) {
     console.log(data.toString('utf-8'));
     //check if the angular app has been served.
-    if (data && data.indexOf('Compiled successfully') >= 0) {
+    if (data && data.indexOf('[at-loader] Ok') >= 0) {
       await timeout(config.waitTimeout);// sleep to ensure everything is prepared
       hookProfiler();//hook the profiler to a headless chrome
     }
@@ -57,16 +57,34 @@ async function hookProfiler() {
   let browser;
   try {
     //launch chrome headless
+    if(config.puppeteerOptions.executablePath && !fs.existsSync(config.puppeteerOptions.executablePath)){
+      let found = false;
+      config.chromePaths.forEach(p=>{
+        if(fs.existsSync(p)){
+          config.puppeteerOptions.executablePath = p;
+          found = true;
+        }
+      });
+      if(!found){
+        throw new Error('There is not valid Chrome path found in your configuration file!')
+      }
+    }
+    console.log(`Chrome path is ${config.puppeteerOptions.executablePath}`);
     browser = await puppeteer.launch(config.puppeteerOptions);
     const routes = config.routes;
     const profiles = {'total-routes': routes.length, routes:[]};
     for(let i=0; i< routes.length; i++) {
-      const page = await browser.newPage();
-      const result = await pageProfiler(routes[i], page);
-      console.log(result);
-      profiles.routes.push(result);
-      await page.close();
-      await timeout(config.testBetweenTimeout);
+      try{
+        const page = await browser.newPage();
+        const result = await pageProfiler(routes[i], page);
+        console.log(result);
+        profiles.routes.push(result);
+        await page.close();
+        await timeout(config.testBetweenTimeout);
+      }catch(err){
+        // catch error to avoid error in one page
+        console.error(err);
+      }
     }
     const profilesName = path.join(config.profileFolder, `profiles-${getDateTime()}.json`);
     fs.writeFileSync(profilesName, JSON.stringify(profiles));
@@ -77,15 +95,15 @@ async function hookProfiler() {
   } catch (err) {
     console.error(err);
   } finally {
-    if (browser) {
-      await browser.close();
-    }
-    if(child){
-      // will exit after destroy stdin of child and kill child
-      child.stdin.destroy();
-      child.kill();
-    }
-    process.exit();
+     if (browser) {
+       await browser.close();
+     }
+     if(child){
+       // will exit after destroy stdin of child and kill child
+       child.stdin.destroy();
+       child.kill();
+     }
+     process.exit();
   }
 }
 
@@ -102,9 +120,11 @@ async function pageProfiler(route, page) {
   const networkRequests = [];//log network requests
   page.on('error', err => {
     console.log(err);
+    throw err;
   });
   page.on('pageerror', perr => {
-    conoe.log(perr);
+    console.log(perr);
+    throw perr;
   });
   let totalBrowserObjects = 0;
   page.on('request', request => {
@@ -150,28 +170,63 @@ async function pageProfiler(route, page) {
     heapSnapshotLoader.write(chunk);
     chunks.push(chunk);
   });
+  let heapSnapshotFinished = false;
+  let skipHeapSnapshot = false;
+  client.on('HeapProfiler.reportHeapSnapshotProgress', ({done, total, finished}) => {
+    console.log(`HeapProfiler.reportHeapSnapshotProgress is ${JSON.stringify({done, total, finished})}`);
+    heapSnapshotFinished = finished;
+  });
 
   // start events
-  await page.tracing.start(config.tracingOptions);
+
   await client.send('Page.enable');
   await client.send('Log.enable');
   await client.send('Log.startViolationsReport', {config:[]});
   await client.send('HeapProfiler.enable');
-
+  await page.tracing.start(config.tracingOptions);
   // go to page with url and wait for selector
   await page.goto(url, {timeout: config.pageTimeout});
   await page.waitForSelector(route.selector, {timeout: config.pageTimeout});
-
   // stop events
-  await client.send('HeapProfiler.takeHeapSnapshot', {reportProgress: false});
-  heapSnapshotLoader.close();
-  await page._client.send('Log.stopViolationsReport');
+  try{
+    await client.send('HeapProfiler.collectGarbage');
+    await client.send('HeapProfiler.takeHeapSnapshot', {reportProgress: true});
+  }catch(e){
+    //catch error to avoid page crash error it costs big storage and memory to takeHeapSnapshot
+    console.error(e);
+    skipHeapSnapshot = true;
+  }
+  // report progress and wait to avoid target close error and most page crash errors happens in takeHeapSnapshot method
+  const start = new Date().getTime();
+  while(true) {
+    if(heapSnapshotFinished  || skipHeapSnapshot){
+      break;
+    }
+    await timeout(config.waitTimeout);
+    if(new Date().getTime()- start > config.waitHeapSnapshotTimeout) {
+      skipHeapSnapshot = true;
+    }
+  }
   await page.tracing.stop();
+  try{
+    await client.send('Page.stopLoading');// Force the page stop all navigations and pending resource fetches
+    await client.send('Log.stopViolationsReport');
+    await client.send('Log.disable');
+    await client.send('HeapProfiler.disable');
+    await client.send('Page.disable');
+  }catch(e){
+    //catch error to avoid page crash error
+    console.error(e);
+  }
+
 
   const datetime  = getDateTime();
+
   // timeline or trace file
   const traceName = path.join(config.profileFolder, `trace-${datetime}.json`);
-  fs.renameSync(config.tracingOptions.path, traceName);
+  if(fs.existsSync(config.tracingOptions.path)){
+    fs.renameSync(config.tracingOptions.path, traceName);
+  }
 
   // save the network data
   const networkName = path.join(config.profileFolder, `networks-${datetime}.json`);
@@ -181,17 +236,24 @@ async function pageProfiler(route, page) {
   const logsName = path.join(config.profileFolder, `logs-${datetime}.json`);
   fs.writeFileSync(logsName, JSON.stringify(logs));
 
-  // save the heapsnapshot, it is not json and can only load by chrome dev tools
-  const heapsnapshotName = path.join(config.profileFolder, `heapsnapshot-${datetime}.heapsnapshot`) ;
-  fs.writeFileSync(heapsnapshotName, chunks.join(''));
-  // find detached nodes
-  const heapSnapshot = heapSnapshotLoader.buildSnapshot();
-  const nodes = heapSnapshot.aggregates(true, 'allObjects',(n)=>n.name().indexOf("Detached DOM")!==-1);
-  console.log('Detached DOM');
-  const totalDeachedDoms = Object.keys(nodes).reduce((previous, key)=>{
-    console.log(`Category: ${key}, object count is ${nodes[key].count}`);
-    return previous + nodes[key].count;
-  }, 0);
+  let totalDeachedDoms = 0;
+  if(heapSnapshotFinished){
+    heapSnapshotLoader.close();
+    // save the heapsnapshot, it is not json and can only load by chrome dev tools
+    const heapsnapshotName = path.join(config.profileFolder, `heapsnapshot-${datetime}.heapsnapshot`) ;
+    fs.writeFileSync(heapsnapshotName, chunks.join(''));
+    // find detached nodes
+    const heapSnapshot = heapSnapshotLoader.buildSnapshot();
+    const nodes = heapSnapshot.aggregates(true, 'allObjects',(n)=>n.name().indexOf("Detached DOM")!==-1);
+    console.log('Detached DOM');
+    totalDeachedDoms = Object.keys(nodes).reduce((previous, key)=>{
+      console.log(`Category: ${key}, object count is ${nodes[key].count}`);
+      return previous + nodes[key].count;
+    }, 0);
+  } else {
+    heapSnapshotLoader.dispose(); // actually reset inside
+    console.log('Error to take heap snapshot and use zero for deached doms')
+  }
 
   const totalWatchers = await page.evaluate(_ => {
     window.angular =  window.angular || {}; // avoid ReferenceError
