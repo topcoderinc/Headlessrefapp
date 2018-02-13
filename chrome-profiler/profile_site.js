@@ -4,7 +4,7 @@ const spawn = require('child_process').spawn;
 const path = require('path');
 const { URL } = require('url');
 const config = require(path.resolve(__dirname, 'config.json'));
-const simpleGit = require('simple-git')();
+const simpleGit =  require('simple-git/promise')();
 const heapSnapshotLoader = require('./HeapSnapshotLoader');
 const timeout = ms => new Promise(res => setTimeout(res, ms));
 const getDateTime =_ => new Date().toISOString().replace(/[-:\.]/g, '_');
@@ -242,6 +242,9 @@ async function pageProfiler(route, page) {
     // save the heapsnapshot, it is not json and can only load by chrome dev tools
     const heapsnapshotName = path.join(config.profileFolder, `heapsnapshot-${datetime}.heapsnapshot`) ;
     fs.writeFileSync(heapsnapshotName, chunks.join(''));
+    if(!process.env.SKIP_ADD_GIT && await simpleGit.checkIsRepo()){
+      await simpleGit.add([heapsnapshotName]);
+    }
     // find detached nodes
     const heapSnapshot = heapSnapshotLoader.buildSnapshot();
     const nodes = heapSnapshot.aggregates(true, 'allObjects',(n)=>n.name().indexOf("Detached DOM")!==-1);
@@ -311,7 +314,7 @@ async function pageProfiler(route, page) {
 
   //add profile result to git if is not skip and current directory is git repo
   if(!process.env.SKIP_ADD_GIT && await simpleGit.checkIsRepo()){
-    await simpleGit.add([traceName, networkName, logsName, heapsnapshotName]);
+    await simpleGit.add([traceName, networkName, logsName]);
   }
 
   return {
