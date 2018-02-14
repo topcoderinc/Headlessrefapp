@@ -25,6 +25,6 @@ ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_a
 RUN chmod +x /usr/local/bin/dumb-init
 
 RUN npm -g config set user root
-
+RUN apt-get update && apt-get install -yq git
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["google-chrome-stable"]
