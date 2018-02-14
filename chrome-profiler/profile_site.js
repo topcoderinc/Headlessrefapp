@@ -5,7 +5,6 @@ const path = require('path');
 const { URL } = require('url');
 const config = require(path.resolve(__dirname, 'config.json'));
 const simpleGit =  require('simple-git/promise')();
-const heapSnapshotLoader = require('./HeapSnapshotLoader');
 const timeout = ms => new Promise(res => setTimeout(res, ms));
 const getDateTime =_ => new Date().toISOString().replace(/[-:\.]/g, '_');
 const formatBytes = bytes=>{
@@ -164,55 +163,21 @@ async function pageProfiler(route, page) {
     logs.push(logEntry.entry);
   });
 
-  // log heapsnapshot
-  const chunks = [];
-  client.on('HeapProfiler.addHeapSnapshotChunk', ({chunk}) => {
-    heapSnapshotLoader.write(chunk);
-    chunks.push(chunk);
-  });
-  let heapSnapshotFinished = false;
-  let skipHeapSnapshot = false;
-  client.on('HeapProfiler.reportHeapSnapshotProgress', ({done, total, finished}) => {
-    console.log(`HeapProfiler.reportHeapSnapshotProgress is ${JSON.stringify({done, total, finished})}`);
-    heapSnapshotFinished = finished;
-  });
-
   // start events
 
   await client.send('Page.enable');
   await client.send('Log.enable');
   await client.send('Log.startViolationsReport', {config:[]});
-  await client.send('HeapProfiler.enable');
   await page.tracing.start(config.tracingOptions);
   // go to page with url and wait for selector
   await page.goto(url, {timeout: config.pageTimeout});
   await page.waitForSelector(route.selector, {timeout: config.pageTimeout});
   // stop events
-  try{
-    await client.send('HeapProfiler.collectGarbage');
-    await client.send('HeapProfiler.takeHeapSnapshot', {reportProgress: true});
-  }catch(e){
-    //catch error to avoid page crash error it costs big storage and memory to takeHeapSnapshot
-    console.error(e);
-    skipHeapSnapshot = true;
-  }
-  // report progress and wait to avoid target close error and most page crash errors happens in takeHeapSnapshot method
-  const start = new Date().getTime();
-  while(true) {
-    if(heapSnapshotFinished  || skipHeapSnapshot){
-      break;
-    }
-    await timeout(config.waitTimeout);
-    if(new Date().getTime()- start > config.waitHeapSnapshotTimeout) {
-      skipHeapSnapshot = true;
-    }
-  }
   await page.tracing.stop();
   try{
     await client.send('Page.stopLoading');// Force the page stop all navigations and pending resource fetches
     await client.send('Log.stopViolationsReport');
     await client.send('Log.disable');
-    await client.send('HeapProfiler.disable');
     await client.send('Page.disable');
   }catch(e){
     //catch error to avoid page crash error
@@ -232,31 +197,9 @@ async function pageProfiler(route, page) {
   const networkName = path.join(config.profileFolder, `networks-${datetime}.json`);
   fs.writeFileSync(networkName,JSON.stringify(networkRequests));
 
-  // save the heapsnapshot
+  // save the logs
   const logsName = path.join(config.profileFolder, `logs-${datetime}.json`);
   fs.writeFileSync(logsName, JSON.stringify(logs));
-
-  let totalDeachedDoms = 0;
-  if(heapSnapshotFinished){
-    heapSnapshotLoader.close();
-    // save the heapsnapshot, it is not json and can only load by chrome dev tools
-    const heapsnapshotName = path.join(config.profileFolder, `heapsnapshot-${datetime}.heapsnapshot`) ;
-    fs.writeFileSync(heapsnapshotName, chunks.join(''));
-    if(!process.env.SKIP_ADD_GIT && await simpleGit.checkIsRepo()){
-      await simpleGit.add([heapsnapshotName]);
-    }
-    // find detached nodes
-    const heapSnapshot = heapSnapshotLoader.buildSnapshot();
-    const nodes = heapSnapshot.aggregates(true, 'allObjects',(n)=>n.name().indexOf("Detached DOM")!==-1);
-    console.log('Detached DOM');
-    totalDeachedDoms = Object.keys(nodes).reduce((previous, key)=>{
-      console.log(`Category: ${key}, object count is ${nodes[key].count}`);
-      return previous + nodes[key].count;
-    }, 0);
-  } else {
-    heapSnapshotLoader.dispose(); // actually reset inside
-    console.log('Error to take heap snapshot and use zero for deached doms')
-  }
 
   const totalWatchers = await page.evaluate(_ => {
     window.angular =  window.angular || {}; // avoid ReferenceError
@@ -324,7 +267,6 @@ async function pageProfiler(route, page) {
     'total-indexeddb-size-mb': indexDBStorage ? formatBytes(indexDBStorage.usage): 0,
     'total-global-variables': totalGlobalVariables,
     'total-console-logs' : logs.length,
-    'total-detached-dom':  totalDeachedDoms,
     'total-browser-objects': totalBrowserObjects
   }
 }

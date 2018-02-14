@@ -26,7 +26,6 @@
     }
   ],
   "waitTimeout": 5000,
-  "waitHeapSnapshotTimeout": 1000,
   "pageTimeout": 20000,
   "testBetweenTimeout": 500,
   "profileFolder": "profiling-data",

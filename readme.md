@@ -16,7 +16,6 @@
   
   # Configurations chrome-profiler/config.json
   - *waitTimeout*: may change, wait to make sure application starts up rightly
-  - *waitHeapSnapshotTimeout*:may change, wait to make sure application will not hang on with HeapSnapshot without progress
   - *pageTimeout*: may change, sometime tests will fail for timeout error and you may use 0 to disable timeout
   - *testBetweenTimeout*: may change, wait sometime between routes
   - *routes*: all routes to test, exist url and wait selector to ensure all resources are loaded in test.
@@ -33,7 +32,6 @@
   - *Total size of browser session storage*: total size of sessionStorage and localStorage, manually calculated by assumption stores as UTF-16 (occupies 2 bytes)
   - *Total size of IndexedDB storage*: extract result from [Storage](https://chromedevtools.github.io/devtools-protocol/tot/Storage)
   - *Number of logs that is published to browser console*: extract result from [Log](https://chromedevtools.github.io/devtools-protocol/tot/Loge) and [console event](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#event-console).
-  - *Number of detached DOM per screen*: extract result from [HeapSnapshot](https://chromedevtools.github.io/devtools-protocol/tot/HeapProfiler#event-addHeapSnapshotChunk)
   - *Number of browser objects*:count the number of HTTP GET requests for each route as the number of browser objects
   
   # Running and Testing
@@ -58,16 +56,13 @@
   # can only run below command in linux or mac you may set environment variables using set SKIP_ADD_GIT=true set SKIP_START_APP=true under windows and then run npm run profile
   SKIP_ADD_GIT=true SKIP_START_APP=true npm run profile
   ```
-  * Run ` npm run profile ` to run the app on headless chrome and capture network and tracing logs, console logs,heap snapshot, profiles result.
+  * Run ` npm run profile ` to run the app on headless chrome and capture network and tracing logs, console logs, profiles result.
   * The network logs is generated in `networks-datetime.json` file in profiling-data directory.
   * The trace logs is generated in `trace-datetime.json` file in profiling-data directory.
   * The console logs is generated in `logs-datetime.json` file in profiling-data directory.
   * The profiles result file is generated in `profiles-datetime.json` file in profiling-data directory.
-  * The heap snapshot is generated in `heapsnapshot-datetime.heapsnapshot` file in profiling-data directory.
   * to view network file `networks-datetime.json` or console logs file `logs-datetime.json` or profiles result file `profiles-datetime.json`, please use [json viewer](http://jsonviewer.stack.hu/).
   * to view trace logs, Open devtools in chrome, go to Performance tab, click on Load Profile icon and select the `trace-datetime.json` file generated.
-  * to view heap snapshot, Open devtools in chrome, go to Memory tab, click on Load icon and select the `heapsnapshot-datetime.heapsnapshot` file generated,
-  input **Detached** in Class filter and you can find deached dom trees/nodes, see ![Alt text](docs/images/Detached.png?raw=true "Detached").
   * The code for it is in chrome-profiler directory.
   
   # Running with docker
@@ -96,4 +91,3 @@
    docker exec -it puppeteer_chrome npm run profile
    ```
   Actually if you remove **SKIP_START_APP=true** from docker-compose.yml file, you can also run `docker-compose run --rm dev npm run profile` directly without need to start application in docker but may meet some wired errors for timeout issues very often.
-  Even you start application in docker you may still meet Page crash errors sometimes.

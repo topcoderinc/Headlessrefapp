@@ -70,20 +70,6 @@
         $el.addEventListener('mousedown', selectItem);
       });
     });
-    // demo codes from https://developer.chrome.com/devtools/docs/heap-profiling-dom-leaks to show detached dom
-    console.log('Add detached nodes');
-    var detached = document.createElement('div');
-    var p = document.createElement('p');
-    p.appendChild(detached);
-    p.removeChild(detached);
-    for (var i = 0; i < 25; ++i) { // use small count to avoid memory leak issue
-      var div = document.createElement('div');
-      div.data = new Array(10000);
-      for (var j = 0, l = div.data.length; j < l; ++j)
-        div.data[j] = j.toString();
-      detached.appendChild(div);
-    }
-    document.body.appendChild(p);
 
     // clear localStorage/sessionStorage and delete indexedDB to avoid memory and storage issue
     localStorage.clear();

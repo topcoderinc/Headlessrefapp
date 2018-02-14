@@ -55,7 +55,6 @@
   "author": "Roman Hotsiy",
   "license": "MIT",
   "devDependencies": {
-    "chrome-devtools-frontend": "^1.0.535658",
     "@angular/router": "^4.4.3",
     "@angular/common": "^4.4.3",
     "@angular/compiler": "^4.4.3",
