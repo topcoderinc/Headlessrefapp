@@ -93,7 +93,7 @@
       raindrops: '++id,position'
     });
     var drops = [];
-    var total = parseInt(1000 + Math.random()*1000, 10);
+    var total = 1//parseInt(1000 + Math.random()*1000, 10);
     for (var k=0;k<total;++k) {
       drops.push({position: `position${k}${dateTime}`});
     }
@@ -107,5 +107,14 @@
         total-e.failures.length + " raindrops was added successfully");
     });
 
+    // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
+    var syncXHRTotal = parseInt(1 + Math.random()*3, 10);
+    console.log(`send sync xhrs with total ${syncXHRTotal} by main.js`);
+    for (var x=0;x<syncXHRTotal;++x) {
+      var syncXHR = new XMLHttpRequest();
+      syncXHR.open('GET', 'main.css?sync='+x, false);  // `false` makes the request synchronous
+      syncXHR.send(null);
+      console.log('sync xhr('+x+') status:'+syncXHR.status);
+    }
   });
 })();

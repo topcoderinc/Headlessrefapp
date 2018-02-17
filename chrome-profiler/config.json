@@ -28,6 +28,7 @@
   "waitTimeout": 5000,
   "pageTimeout": 20000,
   "testBetweenTimeout": 500,
+  "usageInterval": 1000,
   "profileFolder": "profiling-data",
   "chromePaths":["/usr/bin/google-chrome-unstable","/opt/google/chrome/chrome","C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"],
   "puppeteerOptions": {
@@ -43,11 +44,7 @@
   "tracingOptions": {
     "path": "trace.json",
     "categories": [
-      "disabled-by-default-v8.cpu_profiler",
-      "disabled-by-default-devtools.timeline",
-      "disabled-by-default-devtools.timeline.frame",
-      "devtools.timeline",
-      "v8.execute"
+      "devtools.timeline"
     ]
   }
 }

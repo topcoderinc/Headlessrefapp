@@ -18,6 +18,7 @@
   - *waitTimeout*: may change, wait to make sure application starts up rightly
   - *pageTimeout*: may change, sometime tests will fail for timeout error and you may use 0 to disable timeout
   - *testBetweenTimeout*: may change, wait sometime between routes
+  - *usageInterval*: may change, check cpu usage with interval using [pidusage](https://www.npmjs.com/package/pidusage)
   - *routes*: all routes to test, exist url and wait selector to ensure all resources are loaded in test.
   - *chromePaths*: may change,will be used when executablePath in profileFolder did not find match chrome application.
   - *profileFolder*: no need to change,must be valid git folder exist in repo to push profile files.
@@ -33,7 +34,13 @@
   - *Total size of IndexedDB storage*: extract result from [Storage](https://chromedevtools.github.io/devtools-protocol/tot/Storage)
   - *Number of logs that is published to browser console*: extract result from [Log](https://chromedevtools.github.io/devtools-protocol/tot/Loge) and [console event](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#event-console).
   - *Number of browser objects*:count the number of HTTP GET requests for each route as the number of browser objects
-  
+  - *Number of async XHRs per screen*:count all asynchronous XHR Network Requests from the network file when each URL is loaded
+  - *Number of sync XHRs per screen*:count all synchronous XHR Network Requests from the network file when each URL is loaded
+  - *Total memory utilization per screen*:extract the total memory consumed when each URL is loaded, the unit is MB
+  - *Total CPU utilization per screen*:extract the total CPU consumed when each URL is loaded, the unit is MHz
+  - *Page size of a given route/screen*:Total Download of HTML/IMG/Scripts everything (in MB) for each URL loaded
+
+   
   # Running and Testing
   
   * Run ` npm start ` to start the angular app on localhost:9000 .
@@ -61,8 +68,10 @@
   * The trace logs is generated in `trace-datetime.json` file in profiling-data directory.
   * The console logs is generated in `logs-datetime.json` file in profiling-data directory.
   * The profiles result file is generated in `profiles-datetime.json` file in profiling-data directory.
+  * The cpu profile result file is generated in `cpu-datetime.cpuprofile` file in profiling-data directory.
   * to view network file `networks-datetime.json` or console logs file `logs-datetime.json` or profiles result file `profiles-datetime.json`, please use [json viewer](http://jsonviewer.stack.hu/).
-  * to view trace logs, Open devtools in chrome, go to Performance tab, click on Load Profile icon and select the `trace-datetime.json` file generated.
+  * to view trace logs, Open devtools in chrome, go to Performance tab, click on Load Profile icon and select the `trace-datetime.json` file.
+  * to view cpu profile, Open devtools in chrome, go to Settings->More tools->Javascript Profiler, click on Load Profile icon and select the `cpu-datetime.cpuprofile` file.
   * The code for it is in chrome-profiler directory.
   
   # Running with docker

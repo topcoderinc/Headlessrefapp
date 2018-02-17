@@ -125,6 +125,7 @@
     "rxjs": "^5.3.1"
   },
   "dependencies": {
+    "pidusage": "^1.2.0",
     "core-js": "^2.5.1",
     "dropkickjs": "~2.1.10",
     "hint.css": "^2.3.2",

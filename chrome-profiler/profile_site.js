@@ -5,21 +5,12 @@ const path = require('path');
 const { URL } = require('url');
 const config = require(path.resolve(__dirname, 'config.json'));
 const simpleGit =  require('simple-git/promise')();
+const os = require('os');
+const pusage = require('pidusage');
+const sum = (a,b)=> a + b;
 const timeout = ms => new Promise(res => setTimeout(res, ms));
 const getDateTime =_ => new Date().toISOString().replace(/[-:\.]/g, '_');
-const formatBytes = bytes=>{
-  let num  = bytes/Math.pow(1024,2);
-  let chars = Array.from(String(num));
-  let decimals = 0;
-  let dotIndex = chars.findIndex(x=>x==='.');
-  if(dotIndex !== -1){
-    let nonZeroIndex = chars.findIndex(x=>x!=='.' && x!=='0');
-    if(nonZeroIndex !== -1){
-      decimals = nonZeroIndex < dotIndex ? 2: nonZeroIndex;
-    }
-  }
-  return Number(num.toFixed(decimals));
-};
+const formatBytes = bytes=>Number((bytes/Math.pow(1024,2)).toLocaleString('en-US', {maximumFractionDigits: 2}));
 let child;
 /**
  * function to spawn a new linux process
@@ -68,14 +59,38 @@ async function hookProfiler() {
         throw new Error('There is not valid Chrome path found in your configuration file!')
       }
     }
+    const cpus = os.cpus();
+    console.log('cpus', cpus);
+    const cpuSpeed = cpus.map(x=>x.speed).reduce(sum)/cpus.length; // unit is MHz
     console.log(`Chrome path is ${config.puppeteerOptions.executablePath}`);
     browser = await puppeteer.launch(config.puppeteerOptions);
+    const chromeProcess = await browser.process();
+    const pid = chromeProcess.pid;
+    console.log(`Chrome process pid is ${pid}`);
     const routes = config.routes;
     const profiles = {'total-routes': routes.length, routes:[]};
+    let stats = [];
     for(let i=0; i< routes.length; i++) {
       try{
+        let cpuCheck = setInterval(()=>{
+          pusage.stat(pid, {advanced: true}, function (err, stat) {
+            if(err){
+              console.log(err);
+            } else {
+              console.log('pusage', stat);
+              stats.push(stat);
+            }
+          });
+        }, config.usageInterval);
         const page = await browser.newPage();
         const result = await pageProfiler(routes[i], page);
+
+        clearInterval(cpuCheck);
+        pusage.unmonitor(process.pid);
+        // stats is cpu % usage for  one core
+        result['total-cpu-utilization-mhz'] = parseInt(cpuSpeed * stats.map(x=>x.cpu).reduce(sum)/(stats.length*100), 10);
+        stats = [];
+
         console.log(result);
         profiles.routes.push(result);
         await page.close();
@@ -168,13 +183,45 @@ async function pageProfiler(route, page) {
   await client.send('Page.enable');
   await client.send('Log.enable');
   await client.send('Log.startViolationsReport', {config:[]});
+  await client.send('Network.enable');
+  await client.send('Network.clearBrowserCache');// make sure no cache/cookies
+  await client.send('Network.clearBrowserCookies');
+  await client.send('Performance.enable');// actually enable by page by default
+  // evaluateOnNewDocument is invoked after the document was created but before any of its scripts were run
+  await page.evaluateOnNewDocument(() => {
+    // must not exist such field in window
+    window.sync_async_xhr_total = {
+      async:0,
+      sync:0
+    };
+    XMLHttpRequest.prototype.open = (function(open){
+      return function(method, url, async, user, password) {
+        // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/open
+        // async An optional Boolean parameter, defaulting to true
+        if(async === false){
+          window.sync_async_xhr_total.sync++;
+        } else {
+          window.sync_async_xhr_total.async++;
+        }
+        open.apply(this, arguments);
+      };
+    })(XMLHttpRequest.prototype.open);
+  });
   await page.tracing.start(config.tracingOptions);
+  await client.send('Profiler.enable');
+  await client.send('Profiler.start');
   // go to page with url and wait for selector
   await page.goto(url, {timeout: config.pageTimeout});
   await page.waitForSelector(route.selector, {timeout: config.pageTimeout});
   // stop events
+  const cpuProfile = await client.send('Profiler.stop');
   await page.tracing.stop();
+  const pageMetrics = await page.metrics();
+  console.log('page metrics:', pageMetrics);
   try{
+   // await client.send('Profiler.disable');
+    await client.send('Performance.disable');
+    await client.send('Network.disable');
     await client.send('Page.stopLoading');// Force the page stop all navigations and pending resource fetches
     await client.send('Log.stopViolationsReport');
     await client.send('Log.disable');
@@ -200,6 +247,10 @@ async function pageProfiler(route, page) {
   // save the logs
   const logsName = path.join(config.profileFolder, `logs-${datetime}.json`);
   fs.writeFileSync(logsName, JSON.stringify(logs));
+
+  // save the cpu profile
+  const cpuProfileName = path.join(config.profileFolder, `cpu-${datetime}.cpuprofile`);
+  fs.writeFileSync(cpuProfileName, JSON.stringify(cpuProfile.profile, null,2));
 
   const totalWatchers = await page.evaluate(_ => {
     window.angular =  window.angular || {}; // avoid ReferenceError
@@ -238,8 +289,7 @@ async function pageProfiler(route, page) {
   const sourceUrl = new URL(url);
   const sourceOrigin = sourceUrl.origin;
   const storageUsage = await client.send('Storage.getUsageAndQuota', {origin: sourceOrigin});
-  console.log('storage usage');
-  console.log(storageUsage);
+  console.log('storage usage', storageUsage);
   const indexDBStorage = storageUsage.usageBreakdown.find(s=>s.storageType === 'indexeddb');
 
 
@@ -257,9 +307,24 @@ async function pageProfiler(route, page) {
 
   //add profile result to git if is not skip and current directory is git repo
   if(!process.env.SKIP_ADD_GIT && await simpleGit.checkIsRepo()){
-    await simpleGit.add([traceName, networkName, logsName]);
+    await simpleGit.add([traceName, networkName, logsName, cpuProfileName]);
   }
-
+  const totalXHR = await page.evaluate(_ =>window.window.sync_async_xhr_total);
+  const events = fs.readFileSync(traceName, 'utf8')
+  const tracing = JSON.parse(events);
+  const requestIds = tracing.traceEvents.filter(
+    x =>
+      x.cat === 'devtools.timeline' && x.name==='ResourceSendRequest'
+      && x.args && x.args.data && x.args.data.url && !x.args.data.url.startsWith("data:")
+      && x.args.data.requestId
+  ).map(x=>x.args.data.requestId);
+  const finishedResources = tracing.traceEvents.filter(
+    x =>
+      x.cat === 'devtools.timeline' && x.name==='ResourceFinish'
+      && x.args && x.args.data
+      && x.args.data.requestId  && requestIds.indexOf( x.args.data.requestId)!==-1
+      && !isNaN(x.args.data.encodedDataLength)
+  ).map(x=>x.args.data.encodedDataLength);
   return {
     url: url,
     'total-watchers':totalWatchers,
@@ -267,6 +332,10 @@ async function pageProfiler(route, page) {
     'total-indexeddb-size-mb': indexDBStorage ? formatBytes(indexDBStorage.usage): 0,
     'total-global-variables': totalGlobalVariables,
     'total-console-logs' : logs.length,
-    'total-browser-objects': totalBrowserObjects
+    'total-browser-objects': totalBrowserObjects,
+    'total-sync-xhr': totalXHR.sync,
+    'total-async-xhr': totalXHR.async,
+    'total-memory-utilization-mb':formatBytes(pageMetrics.JSHeapTotalSize),
+    'total-page-weight-mb': formatBytes(finishedResources.reduce(sum))
   }
 }
