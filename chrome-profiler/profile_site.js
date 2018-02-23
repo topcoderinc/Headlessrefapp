@@ -85,7 +85,7 @@ async function hookProfiler() {
 
         clearInterval(cpuCheck);
         pusage.unmonitor(process.pid);
-        result['total-cpu-utilization-percent'] = formatNumber(stats.map(x=>x.cpu).reduce(sum)/stats.length);
+        result['total-cpu-utilization-percentage'] = formatNumber(stats.map(x=>x.cpu).reduce(sum)/stats.length);
         stats = [];
         console.log(result);
         profiles.routes.push(result);
