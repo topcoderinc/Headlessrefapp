@@ -37,7 +37,7 @@
   - *Number of async XHRs per screen*:count all asynchronous XHR Network Requests from the network file when each URL is loaded
   - *Number of sync XHRs per screen*:count all synchronous XHR Network Requests from the network file when each URL is loaded
   - *Total memory utilization per screen*:extract the total memory consumed when each URL is loaded, the unit is MB
-  - *Total CPU utilization per screen*:extract the total CPU consumed when each URL is loaded, the unit is MHz
+  - *Total CPU percent per screen*:extract the total CPU percent consumed when each URL is loaded
   - *Page size of a given route/screen*:Total Download of HTML/IMG/Scripts everything (in MB) for each URL loaded
 
    
@@ -68,10 +68,8 @@
   * The trace logs is generated in `trace-datetime.json` file in profiling-data directory.
   * The console logs is generated in `logs-datetime.json` file in profiling-data directory.
   * The profiles result file is generated in `profiles-datetime.json` file in profiling-data directory.
-  * The cpu profile result file is generated in `cpu-datetime.cpuprofile` file in profiling-data directory.
   * to view network file `networks-datetime.json` or console logs file `logs-datetime.json` or profiles result file `profiles-datetime.json`, please use [json viewer](http://jsonviewer.stack.hu/).
   * to view trace logs, Open devtools in chrome, go to Performance tab, click on Load Profile icon and select the `trace-datetime.json` file.
-  * to view cpu profile, Open devtools in chrome, go to Settings->More tools->Javascript Profiler, click on Load Profile icon and select the `cpu-datetime.cpuprofile` file.
   * The code for it is in chrome-profiler directory.
   
   # Running with docker

@@ -10,7 +10,8 @@ const pusage = require('pidusage');
 const sum = (a,b)=> a + b;
 const timeout = ms => new Promise(res => setTimeout(res, ms));
 const getDateTime =_ => new Date().toISOString().replace(/[-:\.]/g, '_');
-const formatBytes = bytes=>Number((bytes/Math.pow(1024,2)).toLocaleString('en-US', {maximumFractionDigits: 2}));
+const formatNumber = num=>Number(num.toLocaleString('en-US', {maximumFractionDigits: 2}));
+const formatBytes = bytes=>formatNumber(bytes/Math.pow(1024,2));
 let child;
 /**
  * function to spawn a new linux process
@@ -59,9 +60,6 @@ async function hookProfiler() {
         throw new Error('There is not valid Chrome path found in your configuration file!')
       }
     }
-    const cpus = os.cpus();
-    console.log('cpus', cpus);
-    const cpuSpeed = cpus.map(x=>x.speed).reduce(sum)/cpus.length; // unit is MHz
     console.log(`Chrome path is ${config.puppeteerOptions.executablePath}`);
     browser = await puppeteer.launch(config.puppeteerOptions);
     const chromeProcess = await browser.process();
@@ -87,10 +85,8 @@ async function hookProfiler() {
 
         clearInterval(cpuCheck);
         pusage.unmonitor(process.pid);
-        // stats is cpu % usage for  one core
-        result['total-cpu-utilization-mhz'] = parseInt(cpuSpeed * stats.map(x=>x.cpu).reduce(sum)/(stats.length*100), 10);
+        result['total-cpu-utilization-percent'] = formatNumber(stats.map(x=>x.cpu).reduce(sum)/stats.length);
         stats = [];
-
         console.log(result);
         profiles.routes.push(result);
         await page.close();
@@ -208,18 +204,14 @@ async function pageProfiler(route, page) {
     })(XMLHttpRequest.prototype.open);
   });
   await page.tracing.start(config.tracingOptions);
-  await client.send('Profiler.enable');
-  await client.send('Profiler.start');
   // go to page with url and wait for selector
   await page.goto(url, {timeout: config.pageTimeout});
   await page.waitForSelector(route.selector, {timeout: config.pageTimeout});
   // stop events
-  const cpuProfile = await client.send('Profiler.stop');
   await page.tracing.stop();
   const pageMetrics = await page.metrics();
   console.log('page metrics:', pageMetrics);
   try{
-   // await client.send('Profiler.disable');
     await client.send('Performance.disable');
     await client.send('Network.disable');
     await client.send('Page.stopLoading');// Force the page stop all navigations and pending resource fetches
@@ -248,9 +240,6 @@ async function pageProfiler(route, page) {
   const logsName = path.join(config.profileFolder, `logs-${datetime}.json`);
   fs.writeFileSync(logsName, JSON.stringify(logs));
 
-  // save the cpu profile
-  const cpuProfileName = path.join(config.profileFolder, `cpu-${datetime}.cpuprofile`);
-  fs.writeFileSync(cpuProfileName, JSON.stringify(cpuProfile.profile, null,2));
 
   const totalWatchers = await page.evaluate(_ => {
     window.angular =  window.angular || {}; // avoid ReferenceError
@@ -307,7 +296,7 @@ async function pageProfiler(route, page) {
 
   //add profile result to git if is not skip and current directory is git repo
   if(!process.env.SKIP_ADD_GIT && await simpleGit.checkIsRepo()){
-    await simpleGit.add([traceName, networkName, logsName, cpuProfileName]);
+    await simpleGit.add([traceName, networkName, logsName]);
   }
   const totalXHR = await page.evaluate(_ =>window.window.sync_async_xhr_total);
   const events = fs.readFileSync(traceName, 'utf8')
