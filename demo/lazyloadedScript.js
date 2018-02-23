@@ -1,0 +1,1 @@
+console.log(new Date().getTime()+ ' This is message from lazy load scripts!');

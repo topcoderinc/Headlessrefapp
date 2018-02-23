@@ -34,10 +34,11 @@
   - *Total size of IndexedDB storage*: extract result from [Storage](https://chromedevtools.github.io/devtools-protocol/tot/Storage)
   - *Number of logs that is published to browser console*: extract result from [Log](https://chromedevtools.github.io/devtools-protocol/tot/Loge) and [console event](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#event-console).
   - *Number of browser objects*:count the number of HTTP GET requests for each route as the number of browser objects
+  - *Number of blocking script for each route*:count all lazy loaded scripts
   - *Number of async XHRs per screen*:count all asynchronous XHR Network Requests from the network file when each URL is loaded
   - *Number of sync XHRs per screen*:count all synchronous XHR Network Requests from the network file when each URL is loaded
   - *Total memory utilization per screen*:extract the total memory consumed when each URL is loaded, the unit is MB
-  - *Total CPU percent per screen*:extract the total CPU percent consumed when each URL is loaded
+  - *Total CPU utilization percent per screen*:extract the total CPU percent consumed when each URL is loaded
   - *Page size of a given route/screen*:Total Download of HTML/IMG/Scripts everything (in MB) for each URL loaded
 
    

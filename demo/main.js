@@ -118,3 +118,18 @@
     }
   });
 })();
+
+// lazy load scripts
+window.addEventListener('load',function () {
+  var lazyloadTotal = parseInt(1 + Math.random()*3, 10);
+  console.log(`lazy load scripts with total ${lazyloadTotal} by main.js`);
+  for (var z=0;z<lazyloadTotal;++z) {
+    var scriptEl = document.createElement('script');
+    // add index in url to send multi requests
+    scriptEl.src = 'lazyloadedScript.js?index='+z;
+    scriptEl.addEventListener('load', function () {
+      console.log('lazy load scripts successfully!');
+    }, false);
+    document.head.appendChild(scriptEl);
+  }
+},false);

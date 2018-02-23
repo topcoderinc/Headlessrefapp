@@ -137,7 +137,11 @@ async function pageProfiler(route, page) {
     throw perr;
   });
   let totalBrowserObjects = 0;
+  const scripts = [];
   page.on('request', request => {
+    if(request._resourceType === 'script'){
+      scripts.push(new Date().getTime());
+    }
     // just count the number of HTTP GET requests for each route as the number of browser objects
     if(request._url && request._url.toLowerCase().startsWith("http")
     && request._method && request._method === 'GET'){
@@ -314,6 +318,12 @@ async function pageProfiler(route, page) {
       && x.args.data.requestId  && requestIds.indexOf( x.args.data.requestId)!==-1
       && !isNaN(x.args.data.encodedDataLength)
   ).map(x=>x.args.data.encodedDataLength);
+
+  const loadEventEnd = await page.evaluate(_ =>window.performance.timing.loadEventEnd);
+  console.log('performance.timing.loadEventEnd', loadEventEnd);
+  // lazy load mean script request start time >load end time
+  const blockingScriptsTotal = scripts.filter(x=>x>loadEventEnd).length;
+  console.log(`total scripts is ${scripts.length} and lazy load scripts total is ${blockingScriptsTotal}`);
   return {
     url: url,
     'total-watchers':totalWatchers,
@@ -322,6 +332,7 @@ async function pageProfiler(route, page) {
     'total-global-variables': totalGlobalVariables,
     'total-console-logs' : logs.length,
     'total-browser-objects': totalBrowserObjects,
+    'blocking-scripts': blockingScriptsTotal,
     'total-sync-xhr': totalXHR.sync,
     'total-async-xhr': totalXHR.async,
     'total-memory-utilization-mb':formatBytes(pageMetrics.JSHeapTotalSize),
