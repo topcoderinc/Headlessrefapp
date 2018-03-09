@@ -1,0 +1,107 @@
+@media only screen and (min-width: 768px) {
+  .scroll {
+    max-height: 100vh;
+    overflow: auto;
+  }
+}
+
+.card-title,
+.route-name {
+  word-break: break-word;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card+.card {
+  margin-top: 20px;
+  ;
+}
+
+
+/* Chart pie */
+
+$green: #2b882f;
+$yellow: #ffab00;
+$red: #df332f;
+.pie {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #eee;
+  background-image: linear-gradient(to right, transparent 50%, black 0);
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  &.green {
+    background-image: linear-gradient(to right, transparent 50%, $green 0);
+  }
+  &.yellow {
+    background-image: linear-gradient(to right, transparent 50%, $yellow 0);
+  }
+  &.red {
+    background-image: linear-gradient(to right, transparent 50%, $red 0);
+  }
+}
+
+.pie::before {
+  content: '';
+  display: block;
+  margin-left: 50%;
+  height: 100%;
+  border-radius: 0 100% 100% 0 / 50%;
+  background-color: inherit;
+  transform-origin: left;
+}
+
+.pie__text {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  border-radius: 50%;
+  background-color: #fff;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  line-height: 90px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+@for $i from 0 through 50 {
+  .pie[data-value="#{$i}"]:before {
+    transform: rotate(#{$i/100}turn);
+  }
+}
+
+@for $i from 51 through 100 {
+  .pie[data-value="#{$i}"] {
+    &:before {
+      transform: rotate(#{$i/100 - .5}turn);
+    }
+    &.green:before {
+      background-color: $green;
+    }
+    &.yellow:before {
+      background-color: $yellow;
+    }
+    &.red:before {
+      background-color: $red;
+    }
+  }
+}
+
+.chart {
+  text-align: center;
+  width: 200px;
+}
+
+.charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
