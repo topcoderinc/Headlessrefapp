@@ -29,6 +29,7 @@ pipeline {
                 echo 'kill process to avoid issues later'
                 sh(returnStdout: true, script: 'lsof -i:$PROFILE_PORT -t | xargs -r kill -9') 
                 sh 'npm run profile'
+                sh 'npm run generate-report'
                 echo 'git commit'
                 sh 'git commit -m "$JENKINS_SKIP_BUILD upload profile result by build $BUILD_NUMBER"'
                 echo 'git pull and push to avoid slow build and new commits'

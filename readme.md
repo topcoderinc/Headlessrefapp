@@ -72,7 +72,7 @@
   * to view network file `networks-datetime.json` or console logs file `logs-datetime.json` or profiles result file `profiles-datetime.json`, please use [json viewer](http://jsonviewer.stack.hu/).
   * to view trace logs, Open devtools in chrome, go to Performance tab, click on Load Profile icon and select the `trace-datetime.json` file.
   * The code for it is in chrome-profiler directory.
-  
+  * Run `npm run generate-report` to generate reports for `profiles-*.json` files. Html files will be generated under `scorecard-reports/scorecard-reports-*.html`
   # Running with docker
   Please install docker(17.12.0+) and docker-compose(1.19.0+) or latest docker and docker-compose that supports
   [docker-compose version 3.5](https://docs.docker.com/compose/compose-file/compose-versioning/#version-35) with new feature **shm_size**.
@@ -91,11 +91,13 @@
    docker rm -f puppeteer_chrome
    docker-compose up --force-recreate
    docker exec -it puppeteer_chrome npm run profile
+   docker exec -it puppeteer_chrome npm run generate-report
   ```
    or you can also use this way 
    ```sh
    docker rm -f puppeteer_chrome
    docker-compose run --rm --service-ports --name=puppeteer_chrome dev
    docker exec -it puppeteer_chrome npm run profile
+   docker exec -it puppeteer_chrome npm run generate-report
    ```
   Actually if you remove **SKIP_START_APP=true** from docker-compose.yml file, you can also run `docker-compose run --rm dev npm run profile` directly without need to start application in docker but may meet some wired errors for timeout issues very often.
