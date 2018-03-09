@@ -53,6 +53,7 @@
     "no-access-missing-member": true,
     "invoke-injectable": true,
     "no-unused-css": true,
-    "quotemark": false
+    "quotemark": false,
+    "semicolon": false
   }
 }
