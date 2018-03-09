@@ -1,4 +1,5 @@
 import * as React from 'react';
+import 'react-dates/initialize';
 import { metrics, dataSeries } from '../config';
 import { Timeline } from './Timeline';
 

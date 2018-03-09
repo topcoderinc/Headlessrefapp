@@ -4,25 +4,29 @@
   "scripts": {
     "start:chart": "parcel serve src/chart/index.html",
     "start:timeline": "parcel serve src/timeline/index.html",
-    "postinstall": "npm run build:chart",
-    "build:chart": "cross-env NODE_ENV=production parcel build src/chart/index.html --public-url ./lib  --out-file chart.html",
-    "build:timeline": "cross-env NODE_ENV=production parcel build src/timeline/index.html --public-url ./lib  --out-file timeline.html"
+    "postinstall": "npm run build:chart && npm run build:timeline",
+    "build:chart":
+      "cross-env NODE_ENV=production parcel build src/chart/index.html --public-url ./lib  --out-file chart.html",
+    "build:timeline":
+      "cross-env NODE_ENV=production parcel build src/timeline/index.html --public-url ./lib  --out-file timeline.html --no-minify"
   },
   "dependencies": {
     "@types/c3": "^0.4.54",
     "@types/ramda": "github:types/npm-ramda#dist",
     "@types/react": "^16.0.39",
+    "@types/react-dates": "^16.0.5",
     "@types/react-dom": "^16.0.4",
     "@types/react-select": "^1.2.4",
     "bootstrap": "^4.0.0-alpha.6",
     "c3": "^0.4.21",
     "cross-env": "^5.1.3",
     "d3": "^3.5.17",
-    "moment": "~2.18.1",
-    "moment-timezone": "~0.5.13",
+    "moment": "2.18.0",
+    "moment-timezone": "^0.5.11",
     "parcel-bundler": "^1.6.2",
     "ramda": "^0.25.0",
     "react": "^16.2.0",
+    "react-dates": "^16.3.6",
     "react-dom": "^16.2.0",
     "react-select": "^1.2.1",
     "typescript": "^2.7.2"

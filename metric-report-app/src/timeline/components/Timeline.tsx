@@ -1,8 +1,10 @@
 import * as React from 'react';
-import * as moment from 'moment';
+import { Moment } from 'moment';
+import moment from '../../moment';
 import * as R from 'ramda';
 import * as c3 from 'c3';
 import Select, { Option } from 'react-select';
+import { DateRangePicker } from 'react-dates';
 import { DataSeries } from '../types';
 import { RouteStats } from '../../chart/types';
 
@@ -18,8 +20,9 @@ export interface TimelineState {
   routes: Option<string>[] | null;
   date: DateType | null;
   allRoutes: Option<string>[];
-  customStart: Date | null;
-  customEnd: Date | null;
+  customStart: Moment | null;
+  customEnd: Moment | null;
+  focusedInput: 'startDate' | 'endDate' | null;
 }
 
 export class Timeline extends React.Component<TimelineProps, TimelineState> {
@@ -41,21 +44,10 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
       allRoutes,
       customStart: null,
       customEnd: null,
+      focusedInput: null,
     };
-    console.log(moment);
   }
 
-  // componentDidMount() {
-  //   c3.generate({
-  //     bindto: '#chart',
-  //     data: {
-  //       columns: [
-  //         ['data1', 30, 200, 100, 400, 150, 250],
-  //         ['data2', 50, 20, 10, 40, 15, 25],
-  //       ],
-  //     },
-  //   });
-  // }
   getDateRange = () => {
     const { date, customStart, customEnd } = this.state;
     const endOfDay = moment()
@@ -102,8 +94,8 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
         };
       case 'custom': {
         return {
-          start: customStart!.getTime(),
-          end: customEnd!.getTime(),
+          start: customStart!.toDate().getTime(),
+          end: customEnd!.toDate().getTime(),
         };
       }
     }
@@ -118,13 +110,6 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
       return;
     }
     const { start, end } = this.getDateRange();
-    // routes.reduce(
-    //   (acc, item) => {
-    //     acc[item.value!] = true;
-    //     return acc;
-    //   },
-    //   {} as { [s: string]: boolean },
-    // );
     const urlToValues = routes.reduce(
       (acc, item) => {
         acc[item.value!] = [];
@@ -136,12 +121,12 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
       const date = new Date(data.date).getTime();
       return date >= start && date <= end;
     });
-    const xColumn = ['x', ...filtered.map(item => item.date)];
+    const xColumn = ['x', ...filtered.map(item => new Date(item.date))] as any;
     filtered.forEach(data => {
       const routeMap = R.indexBy(item => item.url, data.routes);
-      data.routes.forEach(item => {
-        const routeState = routeMap[item.url];
-        urlToValues[item.url].push(routeState ? routeState[metric] : 0);
+      routes.forEach(item => {
+        const routeState = routeMap[item.value!];
+        urlToValues[item.value!].push(routeState ? routeState[metric] : 0);
       });
     });
     const columns = [
@@ -158,7 +143,7 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
         x: {
           type: 'timeseries',
           tick: {
-            format: '%Y-%m-%d',
+            format: '%Y-%m-%d %H:%M',
           },
         },
       },
@@ -183,6 +168,19 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
       return;
     }
     this.setState({ date: value.value as DateType }, this.drawChart);
+  };
+
+  changeRange = ({
+    startDate,
+    endDate,
+  }: {
+    startDate: Moment | null;
+    endDate: Moment | null;
+  }) => {
+    this.setState(
+      { customStart: startDate, customEnd: endDate },
+      this.drawChart,
+    );
   };
 
   render() {
@@ -230,6 +228,20 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
                   { value: 'custom', label: 'Custom' },
                 ]}
               />
+              {date === 'custom' && (
+                <DateRangePicker
+                  startDate={this.state.customStart}
+                  startDateId="start"
+                  endDate={this.state.customEnd}
+                  endDateId="end"
+                  onDatesChange={this.changeRange}
+                  focusedInput={this.state.focusedInput}
+                  onFocusChange={focusedInput =>
+                    this.setState({ focusedInput })
+                  }
+                  isOutsideRange={() => false}
+                />
+              )}
             </div>
           </div>
         </div>

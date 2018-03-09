@@ -17,7 +17,7 @@ const urls = [
   'http://localhost:9000/?url=https://api.apis.guru/v2/specs/graphhopper.com/1.0/swagger.yaml',
 ];
 
-const count = 100;
+const count = 150;
 
 const rand = (start: number, end: number, precision: number = 0) => {
   return Number((Math.random() * (end - start) + start).toFixed(precision));
@@ -27,7 +27,7 @@ const randFloat = (start: number, end: number) => rand(start, end, 2);
 
 const data = Array.from(Array(count).keys()).map(i => {
   const date = moment()
-    .add(-i, 'days')
+    .add(-i * 10, 'hours')
     .format();
   const routes = urls.map(url => ({
     url,
