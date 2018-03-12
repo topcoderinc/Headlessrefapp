@@ -7,11 +7,13 @@
 
   "total-global-variables",
 
-  "total-console-logs",
+  "total-error-logs",
+
+  "total-warning-logs",
 
   "total-browser-objects",
 
-  "blocking-scripts",
+  "lazy-load-libraries-percentage",
 
   "total-sync-xhr",
 

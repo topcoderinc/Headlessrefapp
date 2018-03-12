@@ -144,7 +144,7 @@ async function pageProfiler(route, page) {
     }
     // just count the number of HTTP GET requests for each route as the number of browser objects
     if(request._url && request._url.toLowerCase().startsWith("http")
-    && request._method && request._method === 'GET'){
+    && request._method && (request._method === 'GET' || request._method === 'POST')){
       totalBrowserObjects++;
     }
   });
@@ -168,14 +168,26 @@ async function pageProfiler(route, page) {
   });
   // need to listen console in page and Log.entryAdded in client to get all logs
   const logs = [];
+  let numWarnLogs = 0;
+  let numErrorLogs = 0;
   page.on('console', msg => {
     logs.push({
       type: msg._type,
       text: msg._text
     });
+    if (msg._type === 'warn') {
+      ++numWarnLogs;
+    } else if (msg._type == 'error') {
+      ++numErrorLogs;
+    }
   });
   client.on('Log.entryAdded', logEntry => {
     logs.push(logEntry.entry);
+    if (logEntry.entry.level === 'warning') {
+      ++numWarnLogs;
+    } else if (logEntry.entry.level === 'error') {
+      ++numErrorLogs;
+    }
   });
 
   // start events
@@ -330,9 +342,10 @@ async function pageProfiler(route, page) {
     'total-cache-size-mb':formatBytes(totalCache),
     'total-indexeddb-size-mb': indexDBStorage ? formatBytes(indexDBStorage.usage): 0,
     'total-global-variables': totalGlobalVariables,
-    'total-console-logs' : logs.length,
+    'total-error-logs' : numErrorLogs,
+    'total-warning-logs' : numWarnLogs,
     'total-browser-objects': totalBrowserObjects,
-    'blocking-scripts': blockingScriptsTotal,
+    'lazy-load-libraries-percentage': formatNumber(100 * (scripts.length - blockingScriptsTotal) / scripts.length),
     'total-sync-xhr': totalXHR.sync,
     'total-async-xhr': totalXHR.async,
     'total-memory-utilization-mb':formatBytes(pageMetrics.JSHeapTotalSize),
