@@ -11,22 +11,12 @@
     "noEmit": true,
     "noEmitHelpers": true,
     "strictNullChecks": false,
-    "typeRoots": [ "./node_modules/@types" ],
-    "lib": [
-      "dom", "es2016", "dom.iterable"
-    ],
-    "types": [
-      "webpack",
-      "jasmine",
-      "should"
-    ]
+    "typeRoots": ["./node_modules/@types"],
+    "lib": ["dom", "es2016", "dom.iterable"],
+    "types": ["webpack", "jasmine", "should"]
   },
   "compileOnSave": false,
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.e2e.ts"
-  ],
+  "exclude": ["node_modules", "dist", "metric-report-app", "**/*.e2e.ts"],
   "awesomeTypescriptLoaderOptions": {
     "resolveGlobs": true,
     "forkChecker": true,

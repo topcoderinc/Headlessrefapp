@@ -1,0 +1,15 @@
+{
+  "healthyRatio": 0.8,
+  "total-watchers": 0,
+  "total-cache-size-mb": 5,
+  "total-indexeddb-size-mb": 30,
+  "total-global-variables": 25,
+  "total-console-logs": 0,
+  "total-browser-objects": 100000,
+  "blocking-scripts": 0,
+  "total-sync-xhr": 5,
+  "total-async-xhr": 5,
+  "total-memory-utilization-mb": 200,
+  "total-page-weight-mb": 200,
+  "total-cpu-utilization-percentage": 25
+}

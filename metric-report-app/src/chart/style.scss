@@ -1,0 +1,31 @@
+@media only screen and (min-width: 768px) {
+  .scroll {
+    max-height: 100vh;
+    overflow: auto;
+  }
+}
+
+.card-title,
+.route-name {
+  word-break: break-word;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card+.card {
+  margin-top: 20px;
+  ;
+}
+
+.chart {
+  text-align: center;
+  width: 200px;
+}
+
+.charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

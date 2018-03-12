@@ -1,0 +1,25 @@
+[
+  "total-watchers",
+
+  "total-cache-size-mb",
+
+  "total-indexeddb-size-mb",
+
+  "total-global-variables",
+
+  "total-console-logs",
+
+  "total-browser-objects",
+
+  "blocking-scripts",
+
+  "total-sync-xhr",
+
+  "total-async-xhr",
+
+  "total-memory-utilization-mb",
+
+  "total-page-weight-mb",
+
+  "total-cpu-utilization-percentage"
+]
