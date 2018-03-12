@@ -147,6 +147,9 @@ export class Timeline extends React.Component<TimelineProps, TimelineState> {
           },
         },
       },
+      padding: {
+        right: 100,
+      },
     });
   };
   changeMetric = (value: Option<string> | null) => {
