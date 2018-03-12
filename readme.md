@@ -32,9 +32,10 @@
   - *Number of watchers of each route*: return 0 for non Angular1 application codes and will only return positive value for Angular1 application with watchers.
   - *Total size of browser session storage*: total size of sessionStorage and localStorage, manually calculated by assumption stores as UTF-16 (occupies 2 bytes)
   - *Total size of IndexedDB storage*: extract result from [Storage](https://chromedevtools.github.io/devtools-protocol/tot/Storage)
-  - *Number of logs that is published to browser console*: extract result from [Log](https://chromedevtools.github.io/devtools-protocol/tot/Loge) and [console event](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#event-console).
-  - *Number of browser objects*:count the number of HTTP GET requests for each route as the number of browser objects
-  - *Number of blocking script for each route*:count all lazy loaded scripts
+  - *Number of error logs that is published to browser console*: extract result from [Log](https://chromedevtools.github.io/devtools-protocol/tot/Loge) and [console event](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#event-console).
+  - *Number of warning logs that is published to browser console*: extract result from [Log](https://chromedevtools.github.io/devtools-protocol/tot/Loge) and [console event](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#event-console).
+  - *Number of browser objects*:count the number of HTTP GET and POST requests for each route as the number of browser objects
+  - *Percentage of lazy loaded scripts for each route*: count the percentage of NON-blocking scripts (example 1/4 scripts is blocked = 75%) 
   - *Number of async XHRs per screen*:count all asynchronous XHR Network Requests from the network file when each URL is loaded
   - *Number of sync XHRs per screen*:count all synchronous XHR Network Requests from the network file when each URL is loaded
   - *Total memory utilization per screen*:extract the total memory consumed when each URL is loaded, the unit is MB
