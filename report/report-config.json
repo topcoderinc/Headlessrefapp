@@ -7,10 +7,14 @@
   "total-error-logs": 0,
   "total-warning-logs": 0,
   "total-browser-objects": 100000,
-  "lazy-load-libraries-percentage": 0,
+  "lazy-load-libraries-percentage": 100,
   "total-sync-xhr": 5,
   "total-async-xhr": 5,
   "total-memory-utilization-mb": 200,
   "total-page-weight-mb": 200,
-  "total-cpu-utilization-percentage": 25
+  "total-cpu-utilization-percentage": 25,
+  
+  "reversed": [
+    "lazy-load-libraries-percentage"
+  ]
 }

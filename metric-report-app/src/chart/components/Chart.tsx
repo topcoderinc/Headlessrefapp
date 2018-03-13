@@ -19,6 +19,8 @@ export class Chart extends React.Component<ChartProps> {
 
     const threshold = config[name];
 
+    const reversedMetrics = config.reversed;
+
     const colors = {
       red: '#df332f',
       yellow: '#ffab00',
@@ -26,17 +28,25 @@ export class Chart extends React.Component<ChartProps> {
     };
 
     const getPercent = () => {
+      let valueColor = value;
+      if (reversedMetrics.includes(name)) {
+        valueColor = threshold - value;
+      }
       if (threshold === 0) {
         return 100;
       }
-      return Math.round(Math.min(value / threshold, 1) * 100);
+      return Math.round(Math.min(valueColor / threshold, 1) * 100);
     };
 
     const getColor = () => {
-      if (value > threshold) {
+      let valueColor = value;
+      if (reversedMetrics.includes(name)) {
+        valueColor = threshold - value;
+      }
+      if (valueColor > threshold) {
         return colors.red;
       }
-      if (value <= config.healthyRatio * threshold) {
+      if (valueColor <= config.healthyRatio * threshold) {
         return colors.green;
       }
       return colors.yellow;
