@@ -18,4 +18,6 @@ export interface ReportStats {
  */
 export type ReportConfig = {
   healthyRatio: number;
+  order: string[];
+  reversed: string[];
 } & { [name: string]: number };

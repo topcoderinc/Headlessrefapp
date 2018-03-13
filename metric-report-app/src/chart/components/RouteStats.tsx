@@ -17,6 +17,15 @@ export const RouteStats: React.SFC<RouteStatsProps> = ({
   index,
 }) => {
   const { url, ...chartValues } = route;
+  const orderMap = config.order.reduce(
+    (acc, item, i) => {
+      acc[item] = i;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+  const names = Object.keys(chartValues);
+  names.sort((a, b) => orderMap[a] - orderMap[b]);
   return (
     <div id={`route-${index}`} className="card">
       <div className="card-body">
@@ -24,7 +33,7 @@ export const RouteStats: React.SFC<RouteStatsProps> = ({
           <strong>Results for: </strong> {url}
         </h5>
         <div className="charts-container">
-          {Object.keys(chartValues).map(name => (
+          {names.map(name => (
             <Chart
               key={name}
               name={name}
