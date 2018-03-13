@@ -25,7 +25,7 @@ module.exports = webpackMerge(commonConfig({
     watchOptions: {
       poll: true
     },
-    host:'0.0.0.0',
+    host:'127.0.0.1',
     port: 9000,
     hot: false,
     stats: 'errors-only'

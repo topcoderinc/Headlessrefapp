@@ -37,7 +37,7 @@
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-gpu",
-      "--remote-debugging-address=0.0.0.0",
+      "--remote-debugging-address=127.0.0.1",
       "--remote-debugging-port=9223"
     ]
   },

@@ -22,7 +22,7 @@ let child;
 function spawnProcess(dir, cmd) {
   const cmdParts = cmd.split(/\s+/);
 
-  return spawn(cmdParts[0], cmdParts.slice(1), {cwd: dir});
+  return spawn(cmdParts[0], cmdParts.slice(1), {cwd: dir, shell: true});
 }
 if(process.env.SKIP_START_APP){
   hookProfiler();//hook the profiler to a headless chrome
