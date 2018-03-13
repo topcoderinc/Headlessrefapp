@@ -40,3 +40,6 @@ compiled
 stats.json
 /package-lock.json
 .idea
+.vscode
+profiling-data/*.json
+scorecard-reports/*
