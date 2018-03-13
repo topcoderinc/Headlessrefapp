@@ -13,8 +13,21 @@
   "total-memory-utilization-mb": 200,
   "total-page-weight-mb": 200,
   "total-cpu-utilization-percentage": 25,
-  
-  "reversed": [
-    "lazy-load-libraries-percentage"
+
+  "reversed": ["lazy-load-libraries-percentage"],
+  "order": [
+    "total-sync-xhr",
+    "total-async-xhr",
+    "total-watchers",
+    "total-cache-size-mb",
+    "total-indexeddb-size-mb",
+    "total-global-variables",
+    "total-error-logs",
+    "total-warning-logs",
+    "total-browser-objects",
+    "lazy-load-libraries-percentage",
+    "total-memory-utilization-mb",
+    "total-page-weight-mb",
+    "total-cpu-utilization-percentage"
   ]
 }
