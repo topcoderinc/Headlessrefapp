@@ -30,7 +30,7 @@
   "testBetweenTimeout": 500,
   "usageInterval": 1000,
   "profileFolder": "profiling-data",
-  "chromePaths":["/usr/bin/google-chrome-unstable","/opt/google/chrome/chrome","C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"],
+  "chromePaths":["/usr/bin/google-chrome-unstable","/opt/google/chrome/chrome","C:/Program Files (x86)/Google/Chrome/Application/chrome.exe","/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"],
   "puppeteerOptions": {
     "executablePath": "/usr/bin/google-chrome-stable",
     "args": [
