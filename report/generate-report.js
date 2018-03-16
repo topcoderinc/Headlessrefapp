@@ -33,11 +33,11 @@ if (!files.length) {
 
 // convert 2018_02_23T08_19_55_772Z
 // to 2018-02-23T08:19:55.772Z
-const parseDate = str => {
+const parseDate = (str) => {
   const [date, time] = str.split('T');
   const [h, m, s, ms] = time.split('_');
   const transformed =
-    date.replace(/_/g, '-') + 'T' + [h, m, s].join(':') + '.' + ms;
+    `${date.replace(/_/g, '-')}T${[h, m, s].join(':')}.${ms}`;
   return new Date(transformed);
 };
 
@@ -45,10 +45,10 @@ const dataSeries = [];
 
 // insert at the end in <head>
 function injectJS(content, js) {
-  return content.replace('</head>', js + '</head>');
+  return content.replace('</head>', `${js}</head>`);
 }
 
-files.forEach(name => {
+files.forEach((name) => {
   console.log('processing', name);
   const stats = fs.readFileSync(Path.join(basePath, name), 'utf8');
   const formattedDate = name.replace('profiles-', '').replace('.json', '');
@@ -76,7 +76,7 @@ files.forEach(name => {
   });
 });
 
-const timelineName = `timeline-chart.html`;
+const timelineName = 'timeline-chart.html';
 const timelinePath = Path.join(
   __dirname,
   '../scorecard-reports/',

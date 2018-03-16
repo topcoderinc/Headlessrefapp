@@ -54,6 +54,9 @@
   
   * ` npm start ` should run the app on localhost:9000 .
   
+  # Lint
+
+  Run ` npm run eslint ` to lint `chrome-profiler/profile_site.js` and `report/generate-report.js`.
   
   # Running the app on headless chrome
   I add two flags from environment variables, if exist **SKIP_ADD_GIT** it will not add files to git repo, if exist **SKIP_START_APP** it will not use spawn to start main application.
